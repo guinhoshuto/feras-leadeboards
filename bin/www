@@ -4,10 +4,12 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('feras.leaderboard:server');
-var http = require('http');
+const app = require('../app');
+const debug = require('debug')('feras.leaderboard:server');
+const http = require('http');
 require('dotenv').config()
+
+
 
 /**
  * Get port from environment and store in Express.
