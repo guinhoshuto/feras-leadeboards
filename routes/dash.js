@@ -11,35 +11,22 @@ const params = {
   }
 }
 
+//Select geral (talvez divida por dia)
+router.get('/', async function(req, res, next){
+    res.json({oi})
+})
 
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+//select que traz separado por data data>username filtrado por channel
+router.get('/histogram/:channel', async function(req, res, next){
+    res.json({oi})
+})
 
 router.get('/:channel', async function(req, res, next) {
-  const now = new Date();
-  const conn = await db.connect()
   try {
     const channelInfo = await axios.get(`https://api.streamelements.com/kappa/v2/channels/${req.params.channel}`, params)
     try { 
       const leaderboard = await axios.get(`https://api.streamelements.com/kappa/v2/points/${channelInfo.data._id}/top?limit=1000&offset=0`, params)
       const users = leaderboard.data.users;
-
-      await conn.connect(function(err) {
-        if (err) throw err;
-      });
-      
-      console.log("Connected!");
-      const sql = `INSERT INTO ferasLeaderboard (user, channel, channelId, points, created_at) VALUES ?`
-      const values = []
-      users.forEach(l => {
-        values.push([l.username, channelInfo.data.username, channelInfo.data._id, l.points, now])
-      })
-      console.log(values)
-      conn.query(sql, [values], function (err, result) {
-        if (err) throw err;
-        console.log("record inserted", result);
-      });
       res.json(users)
     } catch (e) {
       res.status(500).json({'message': 'deu ruim pra achar o leaderboard' + e})
