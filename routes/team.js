@@ -28,10 +28,31 @@ const headers = {
 const params = feras.join('&user_login=')
 
 router.get('/', async function(req, res, next) {
+
     const url = `https://api.twitch.tv/helix/streams?user_login=${params}`;
     const data = await axios.get(url, headers)
     const online = data.data.data;
-    res.json({online})
+    const response = [];
+
+    feras.forEach(fera => {
+      const feraOnline = online.find(f => f.user_login === fera);
+      console.log(feraOnline)
+
+      const ferasStats = {
+        is_live: feraOnline ? true : false, 
+        title: feraOnline ? feraOnline.title : '',
+        viewer_count: feraOnline ? feraOnline.viewer_count : '', 
+        game_name: feraOnline ? feraOnline.game_name : '', 
+        user_name: feraOnline ? feraOnline.user_name : '',
+        started_at: feraOnline ? feraOnline.started_at : ''
+      }
+
+      response.push({
+        fera: fera, 
+        ... ferasStats
+      })
+    });
+    res.json({response})
 });
 
 module.exports = router
