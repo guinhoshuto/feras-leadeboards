@@ -45,9 +45,9 @@ router.get('/', async function(req, res, next) {
         game_name: feraOnline ? feraOnline.game_name : '', 
         user_name: feraOnline ? feraOnline.user_name : '',
         started_at: feraOnline ? feraOnline.started_at : '',
-        language: ferasOnline ? ferasOnline.language : '',
-        thumbnail_url: ferasOnline ? ferasOnline.thumbnail_url : '',
-        user_id: ferasOnline ? ferasOnline.user_id : ''
+        language: feraOnline ? feraOnline.language : '',
+        thumbnail_url: feraOnline ? feraOnline.thumbnail_url : '',
+        user_id: feraOnline ? feraOnline.user_id : ''
       }
 
       response.push({
