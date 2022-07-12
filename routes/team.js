@@ -27,16 +27,30 @@ const headers = {
 }
 
 const params = feras.join('&user_login=')
+const params_users = feras.join('&login=')
 
 router.get('/', async function(req, res, next) {
     const url = `https://api.twitch.tv/helix/streams?user_login=${params}`;
-    const data = await axios.get(url, headers)
-    const online = data.data.data;
+    const url_users = `https://api.twitch.tv/helix/users?login=${params_users}`; 
+    console.log(url_users)
+    let online, streamers;
+    try{
+      const data = await axios.get(url, headers);
+      online = data.data.data;
+    } catch(e){
+      console.log('e',e)
+    }
+    try{
+      const data_users = await axios.get(url_users, headers)
+      streamers = data_users.data.data;
+    } catch(e){
+      console.log('e',e)
+    }
     const response = [];
 
     feras.forEach(fera => {
       const feraOnline = online.find(f => f.user_login === fera);
-      console.log(feraOnline)
+      const streamer = streamers.find(s => s.login === fera);
 
       const ferasStats = {
         is_live: feraOnline ? true : false, 
@@ -47,7 +61,10 @@ router.get('/', async function(req, res, next) {
         started_at: feraOnline ? feraOnline.started_at : '',
         language: feraOnline ? feraOnline.language : '',
         thumbnail_url: feraOnline ? feraOnline.thumbnail_url : '',
-        user_id: feraOnline ? feraOnline.user_id : ''
+        user_id: feraOnline ? feraOnline.user_id : '',
+        profile_image_url: streamer.profile_image_url,
+        offline_image_url: streamer.offline_image_url,
+        view_count: streamer.view_count
       }
 
       response.push({
