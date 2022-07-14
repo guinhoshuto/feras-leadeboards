@@ -16,6 +16,27 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/find/:channel/:user', async function(req, res, next) {
+  const channel = req.params.channel;
+  const username = req.params.user;
+  try {
+    const channelInfo = await axios.get(`https://api.streamelements.com/kappa/v2/channels/${req.params.channel}`, params)
+    try{
+      const leaderboard = await axios.get(`https://api.streamelements.com/kappa/v2/points/${channelInfo.data._id}/top?limit=1000&offset=0`, params)
+      const users = leaderboard.data.users;
+
+      const user = users.find(u => u.username === username)
+      res.json({user});
+    } catch(e) {
+      res.status(400).json({'erro': e})
+    }
+  } catch(e) {
+    res.status(400).json({'erro': e})
+  }
+
+})
+
+
 router.get('/:channel', async function(req, res, next) {
   const now = new Date();
   const conn = await db.connect()
