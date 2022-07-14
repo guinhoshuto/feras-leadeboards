@@ -20,7 +20,7 @@ router.get('/find/:channel/:user', async function(req, res, next) {
   const channel = req.params.channel;
   const username = req.params.user;
   try {
-    const channelInfo = await axios.get(`https://api.streamelements.com/kappa/v2/channels/${req.params.channel}`, params)
+    const channelInfo = await axios.get(`https://api.streamelements.com/kappa/v2/channels/${channel}`, params)
     try{
       const leaderboard = await axios.get(`https://api.streamelements.com/kappa/v2/points/${channelInfo.data._id}/top?limit=1000&offset=0`, params)
       const users = leaderboard.data.users;
