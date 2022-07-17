@@ -39,12 +39,14 @@ router.get('/', async function(req, res, next) {
       online = data.data.data;
     } catch(e){
       console.log('e',e)
+      res.status(500).json({'message1': e})  
     }
     try{
       const data_users = await axios.get(url_users, headers)
       streamers = data_users.data.data;
     } catch(e){
       console.log('e',e)
+      res.status(500).json({'message12': e})  
     }
     const response = [];
 
