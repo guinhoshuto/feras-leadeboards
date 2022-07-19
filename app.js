@@ -7,6 +7,7 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const dashRouter = require('./routes/dash');
 const teamRouter = require('./routes/team');
+const guzRouter = require('./routes/guzclap');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use('/guzclap', guzRouter);
 app.use('/dash', dashRouter);
 app.use('/team', teamRouter);
 app.use('/', indexRouter);
