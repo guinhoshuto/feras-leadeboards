@@ -4,7 +4,7 @@ const db = require('../db');
 
 router.get('/twitch/kappa', async function (req, res, next) {
     const conn =  await db.connect();
-    const query = "SELECT username, kappa FROM `guzTwitchMembers` WHERE kappa > 0"
+    const query = "SELECT username, kappa FROM `guzTwitchMembers` WHERE kappa > 0 ORDER BY kappa DESC"
     conn.query(query) 
     .then(([users]) => res.json(users))
     .catch(e => res.status(500).json({'msg': e}))
