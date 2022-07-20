@@ -12,8 +12,12 @@ const params = {
 }
 
 //Select geral (talvez divida por dia)
-router.get('/', async function(req, res, next){
-    res.json({oi})
+router.get('/', async function(req, res, next){ 
+    const conn = await db.connect();
+	const queryAll = "SELECT * FROM `ferasLeaderboard` WHERE 1"
+	conn.query(queryAll)
+	.then(([feras]) => res.json({feras}))
+	.catch(e => res.status(500).json({'e':e}))
 })
 
 //select que traz separado por data data>username filtrado por channel
