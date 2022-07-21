@@ -10,6 +10,14 @@ router.get('/twitch/kappa', async function (req, res, next) {
     .catch(e => res.status(500).json({'msg': e}))
 });
 
+router.get('/twitch/members', async function (req, res, next) {
+    const conn = await db.connect();
+    const query = "SELECT * FROM `guzTwitchMembers` WHERE 1"
+    conn.query(query)
+    .then(([users]) => res.json(users))
+    .catch(e => res.status(500).json({'msg': e}))
+})
+
 router.post('/twitch/members', async function (req, res, next) {
     const conn = await db.connect()
     const queryGuzMembers = "SELECT DISTINCT(user) FROM `ferasLeaderboard` WHERE channel = 'guzcalp'";
