@@ -33,7 +33,7 @@ router.post('/twitch/members', async function (req, res, next) {
 
 router.put('/twitch/:att/:member/:n', async function(req, res, next){
     const n = req.params.n;
-    const operator = parseInt(n) < 0 ? '-' : '+'; 
+    const operator = parseInt(n) < 0 ? '' : '+'; 
 
     const conn = await db.connect()
     const queryUpdateAtt = `UPDATE guzTwitchMembers SET ${req.params.att} = ${req.params.att} ${operator} ${n} WHERE username = '${req.params.member}'`
