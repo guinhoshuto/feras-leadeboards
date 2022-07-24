@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
+router.get('/gabinete/auth', function(req, res, next){
+    res.json({
+        token: 'cu'
+    })
+})
+
 router.get('/twitch/kappa', async function (req, res, next) {
     const conn =  await db.connect();
     const query = "SELECT username, kappa FROM `guzTwitchMembers` WHERE kappa > 0 ORDER BY kappa DESC"
