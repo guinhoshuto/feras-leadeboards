@@ -16,7 +16,8 @@ const feras = [
     'marcellus_v',
     'platynews',
     'guzcalp',
-    'alocairo'
+    'alocairo',
+    'jayjay_ojatin'
 ]
 
 const headers = {
