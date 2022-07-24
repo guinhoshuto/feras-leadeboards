@@ -2,10 +2,13 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-router.get('/gabinete/auth', function(req, res, next){
-    res.json({
-        token: 'cu'
-    })
+router.post('/gabinete/auth', function(req, res, next){
+    if(req.body.pwd === 'cu') {
+        res.json({
+            token: 'cu'
+        })
+    }
+    res.json({'msg': 'senha errada'})
 })
 
 router.get('/twitch/kappa', async function (req, res, next) {
