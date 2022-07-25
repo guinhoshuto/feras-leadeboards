@@ -5,6 +5,7 @@ const router = express.Router();
 require('dotenv').config();
 
 const feras = [
+    'marcellus_v',
     'rubiaarmond',
     'namiwaa',
     'rafaeldfl',
@@ -13,7 +14,6 @@ const feras = [
     'mazeeein',
     'mutsukki',
     'stoneofexile',
-    'marcellus_v',
     'platynews',
     'guzcalp',
     'alocairo',
