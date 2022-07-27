@@ -44,7 +44,17 @@ router.get('/:channel', async function(req, res, next) {
     const channelInfo = await axios.get(`https://api.streamelements.com/kappa/v2/channels/${req.params.channel}`, params)
     try { 
       const leaderboard = await axios.get(`https://api.streamelements.com/kappa/v2/points/${channelInfo.data._id}/top?limit=1000&offset=0`, params)
+      console.log(leaderboard.data)
+      let offset = 1000;
       const users = leaderboard.data.users;
+      while(leaderboard.data._total > offset){
+        let leaderboardTemp = await axios.get(`https://api.streamelements.com/kappa/v2/points/${channelInfo.data._id}/top?limit=1000&offset=${offset}`, params)
+        console.log(leaderboardTemp.data.users)
+        // users.push(leaderboard.data.users)
+        console.log('s')
+        offset += 1000;
+      }
+
 
       await conn.connect(function(err) {
         if (err) throw err;
@@ -56,7 +66,7 @@ router.get('/:channel', async function(req, res, next) {
       users.forEach(l => {
         values.push([l.username, channelInfo.data.username, channelInfo.data._id, l.points, now])
       })
-      console.log(values)
+      // console.log(values)
       conn.query(sql, [values], function (err, result) {
         if (err) throw err;
         console.log("record inserted", result);
