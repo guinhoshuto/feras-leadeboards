@@ -29,7 +29,7 @@ router.get('/alberguz/members', function(req, res, next){
         const alberguz = cubot.guilds.cache.get('855694948707991593');
         alberguz.members.fetch()
         .then(m => res.json(m))
-        .catch(e => res.status(500).json(e))ca
+        .catch(e => res.status(500).json(e))
     })
 });
 
