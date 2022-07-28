@@ -15,7 +15,7 @@ const cubot = new Client({
 router.get('/cassino/fate', function(req, res, next){
     cubot.login(process.env.DISCORD_TOKEN)
     .then(() => {
-        const cassinoChannel = cubot.channels.cache.get('855695828856864799');
+        const cassinoChannel = cubot.channels.cache.get('896104609188298762');
         console.log(cassinoChannel)
         cassinoChannel.messages.fetch({limit: 100})
         .then(m => res.json(m))
@@ -29,7 +29,7 @@ router.get('/alberguz/members', function(req, res, next){
         const alberguz = cubot.guilds.cache.get('855694948707991593');
         alberguz.members.fetch()
         .then(m => res.json(m))
-        .catch(e => res.status(500).json(e))
+        .catch(e => res.status(500).json(e))ca
     })
 });
 
