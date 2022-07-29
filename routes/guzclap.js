@@ -40,6 +40,7 @@ router.post('/twitch/members', async function (req, res, next) {
     const queryGuzMembers = "SELECT DISTINCT(user) FROM `ferasLeaderboard` WHERE channel = 'guzcalp'";
     const [users]  = await conn.query(queryGuzMembers);
     const members = [...users].map(u => [u.user])
+    // console.log([members])
     const queryInsertMembers = `INSERT IGNORE INTO guzTwitchMembers (username) VALUES ?`
     conn.query(queryInsertMembers, [members], function (err, result) {
         if (err) res.status(500).json({'erro': err});
