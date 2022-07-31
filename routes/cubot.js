@@ -15,9 +15,9 @@ const cubot = new Client({
 router.get('/cassino/fate', function(req, res, next){
     cubot.login(process.env.DISCORD_TOKEN)
     .then(() => {
-        const cassinoChannel = cubot.channels.cache.get('855695828856864799');
-        console.log(cassinoChannel)
-        cassinoChannel.messages.fetch({limit: 100})
+        // const cassinoChannel = cubot.channels.cache.get('855695828856864799');
+        console.log(cubot.channels.cache.get('896104609188298762'))
+        cubot.channels.cache.get('855695828856864799').messages.fetch({limit: 100})
         .then(m => res.json(m))
         .catch(e => res.status(500).json(e))
     })
@@ -31,18 +31,19 @@ router.get('/alberguz/members', function(req, res, next){
         .then(discordMembers => {
             discordMember = JSON.parse(JSON.stringify(discordMembers));
             const members = [];
-            discordMember.forEach(m => members.push([m.userId, m.displayName, m.displayAvatarURL, m.joinedTimestamp]));
-            // console.log(JSON.stringify(discordMember))
-            console.log(members);
-            const conn = db.connect();
-            const queryInsertMembers = `INSERT IGNORE INTO guzDiscordMembers (userId, displayName, displayAvatarUrl, timestamp) VALUES ?`
-            conn.query(queryInsertMembers, members, function (err, result) {
-                if (err) res.status(500).json({'erro': err});
-                console.log("record inserted", result);
-            });
-            res.json(discordMember)
+            discordMember.forEach(m => members.push([m.userId, m.nickname, m.displayName, m.displayAvatarURL, m.joinedTimestamp]));
+            const queryInsertMembers = "INSERT IGNORE INTO guzDiscordMembers (userId, nickname, displayName, displayAvatarUrl, timestamp) VALUES ?";
+            db.connect()
+            .then(conn => {
+                conn.query(queryInsertMembers, [members])
+                .then(() => res.json(discordMember))
+                .catch((err) => res.status(500).json({'erros': err}))
+            })
+            .catch(e => res.status(500).json({'erro': e}))
         })
-        .catch(e => res.status(500).json({'e':e}))
+        .catch(e => {
+            console.log(e)
+            res.status(500).json()})
     })
 });
 
