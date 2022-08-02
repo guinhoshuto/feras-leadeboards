@@ -47,5 +47,38 @@ router.get('/alberguz/members', function(req, res, next){
     })
 });
 
+router.get('/copypasta/:nome', function(req, res, next){
+    const query = `SELECT * FROM copypastas WHERE nome='${req.params.nome}'`;
+    db.connect()
+    .then(conn => {
+        conn.query(query)
+        .then(response => res.json(response))
+        .catch((err) => res.status(500).json({'erros': err}))
+    })
+    .catch(e => res.status(500).json({'erro': e}))
+})
+
+router.get('/preceitos', function(req, res, next){
+    const query = `SELECT * FROM zotePreceitos`;
+    db.connect()
+    .then(conn => {
+        conn.query(query)
+        .then(response => res.json(response[0]))
+        .catch((err) => res.status(500).json({'erros': err}))
+    })
+    .catch(e => res.status(500).json({'erro': e}))
+})
+
+router.get('/preceitos/:id', function(req, res, next){
+    const query = `SELECT * FROM zotePreceitos WHERE numero='${req.params.id}'`;
+    db.connect()
+    .then(conn => {
+        conn.query(query)
+        .then(response => res.json(response[0]))
+        .catch((err) => res.status(500).json({'erros': err}))
+    })
+    .catch(e => res.status(500).json({'erro': e}))
+})
+
 
 module.exports = router;
