@@ -47,12 +47,23 @@ router.get('/alberguz/members', function(req, res, next){
     })
 });
 
+router.get('/copypasta', function(req, res, next){
+    const query = `SELECT * FROM copypastas`;
+    db.connect()
+    .then(conn => {
+        conn.query(query)
+        .then(response => res.json(response[0]))
+        .catch((err) => res.status(500).json({'erros': err}))
+    })
+    .catch(e => res.status(500).json({'erro': e}))
+})
+
 router.get('/copypasta/:nome', function(req, res, next){
     const query = `SELECT * FROM copypastas WHERE nome='${req.params.nome}'`;
     db.connect()
     .then(conn => {
         conn.query(query)
-        .then(response => res.json(response))
+        .then(response => res.json(response[0]))
         .catch((err) => res.status(500).json({'erros': err}))
     })
     .catch(e => res.status(500).json({'erro': e}))
