@@ -20,12 +20,20 @@ router.get('/', async function(req, res, next){
 	.catch(e => res.status(500).json({'e':e}))
 })
 
+router.get('/:channel', async function(req, res, next){ 
+  const conn = await db.connect();
+	const queryAll = `SELECT * FROM ferasLeaderboard WHERE channel = '${req.params.channel}'`
+	conn.query(queryAll)
+	.then(([feras]) => res.json({feras}))
+	.catch(e => res.status(500).json({'e':e}))
+})
+
 //select que traz separado por data data>username filtrado por channel
 router.get('/histogram/:channel', async function(req, res, next){
     res.json({oi})
 })
 
-router.get('/:channel', async function(req, res, next) {
+router.post('/:channel', async function(req, res, next) {
   try {
     const channelInfo = await axios.get(`https://api.streamelements.com/kappa/v2/channels/${req.params.channel}`, params)
     try { 
