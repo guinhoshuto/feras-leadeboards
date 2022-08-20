@@ -93,14 +93,7 @@ router.get('/genio/:palavra', function (req, res){
 
     res.json({
         'msg':
-        `GÊNIO: você tem 3 desejos 
-        ${palavra}: faça que todas as palavras tenham ${charQtd} letras 
-        ${primeiroPedido('Gênio', charQtd)}: ${primeiroPedido('Okay', charQtd)} 
-        ${palavra}: ${primeiroPedido('faça', charQtd)} ${primeiroPedido('todas', charQtd)} ${primeiroPedido('as', charQtd)} ${primeiroPedido('palavras', charQtd)} ${primeiroPedido('terem', charQtd)} ${segundaMetade(palavra).toUpperCase()} ${primeiroPedido('no', charQtd)} ${primeiroPedido('final', charQtd)}
-        ${segundoPedido('Gênio', palavra)}: ${segundoPedido('ok', palavra)} 
-        ${palavra}: ${segundoPedido('faça', palavra)} ${segundoPedido('todas', palavra)} ${segundoPedido('as', palavra)} ${segundoPedido('palavras', palavra)} ${segundoPedido('com', palavra)} ${primeiraMetade(palavra).toUpperCase()} ${segundoPedido('no', palavra)} ${segundoPedido('começo', palavra)}
-        ${palavra}: ${palavra}
-        ${palavra}: ${palavra}`
+        `GÊNIO: você tem 3 desejos \n${palavra}: faça que todas as palavras tenham ${charQtd} letras \n${primeiroPedido('Gênio', charQtd)}: ${primeiroPedido('Okay', charQtd)} \n${palavra}: ${primeiroPedido('faça', charQtd)} ${primeiroPedido('todas', charQtd)} ${primeiroPedido('as', charQtd)} ${primeiroPedido('palavras', charQtd)} ${primeiroPedido('terem', charQtd)} ${segundaMetade(palavra).toUpperCase()} ${primeiroPedido('no', charQtd)} ${primeiroPedido('final', charQtd)} \n${segundoPedido('Gênio', palavra)}: ${segundoPedido('ok', palavra)} \n${palavra}: ${segundoPedido('faça', palavra)} ${segundoPedido('todas', palavra)} ${segundoPedido('as', palavra)} ${segundoPedido('palavras', palavra)} ${segundoPedido('com', palavra)} ${primeiraMetade(palavra).toUpperCase()} ${segundoPedido('no', palavra)} ${segundoPedido('começo', palavra)} \n${palavra}: ${palavra} \n${palavra}: ${palavra}`
     })
 
 
