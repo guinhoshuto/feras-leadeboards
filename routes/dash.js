@@ -13,7 +13,7 @@ const params = {
 
 //Select geral (talvez divida por dia)
 router.get('/', async function(req, res, next){ 
-    const conn = await db.connect();
+  const conn = await db.connect();
 	const queryAll = "SELECT * FROM `ferasLeaderboard` WHERE 1"
 	conn.query(queryAll)
 	.then(([feras]) => res.json({feras}))

@@ -1,4 +1,5 @@
 const express = require('express');
+const { route } = require('.');
 const router = express.Router();
 const db = require('../db');
 
@@ -60,5 +61,51 @@ router.put('/twitch/:att/:member/:n', async function(req, res, next){
     .then(() => res.json({'msg': 'foi'}))
     .catch((e) => res.status(500).json({'e': e}))
 });
+
+function primeiroPedido(palavra, length){
+    if(palavra.length > length){
+        return palavra.substring(0, length)
+    } else {
+        const diff = length - palavra.length
+        return palavra + palavra.charAt(palavra.length - 1).repeat(diff)
+    }
+}
+
+function primeiraMetade(palavra){
+    return palavra.substring(0, Math.floor(palavra.length/2))
+}
+
+function segundaMetade(palavra){
+    return palavra.substring(Math.floor(palavra.length/2), palavra.length)
+}
+
+function segundoPedido(palavra, nome){
+    const _primeiroPedido = primeiroPedido(palavra, nome.length)
+    const primeiraParte = _primeiroPedido.substring(0, _primeiroPedido.length - segundaMetade(nome).length)
+    console.log(primeiraParte)
+    console.log(segundaMetade(nome))
+    return primeiraParte + segundaMetade(nome)
+}
+
+router.get('/genio/:palavra', function (req, res){
+    const palavra = req.params.palavra;
+    const charQtd = palavra.length;
+
+    res.json({
+        'msg':
+        `GÊNIO: você tem 3 desejos 
+        ${palavra}: faça que todas as palavras tenham ${charQtd} letras 
+        ${primeiroPedido('Gênio', charQtd)}: ${primeiroPedido('Okay', charQtd)} 
+        ${palavra}: ${primeiroPedido('faça', charQtd)} ${primeiroPedido('todas', charQtd)} ${primeiroPedido('as', charQtd)} ${primeiroPedido('palavras', charQtd)} ${primeiroPedido('terem', charQtd)} ${segundaMetade(palavra).toUpperCase()} ${primeiroPedido('no', charQtd)} ${primeiroPedido('final', charQtd)}
+        ${segundoPedido('Gênio', palavra)}: ${segundoPedido('ok', palavra)} 
+        ${palavra}: ${segundoPedido('faça', palavra)} ${segundoPedido('todas', palavra)} ${segundoPedido('as', palavra)} ${segundoPedido('palavras', palavra)} ${segundoPedido('com', palavra)} ${primeiraMetade(palavra).toUpperCase()} ${segundoPedido('no', palavra)} ${segundoPedido('começo', palavra)}
+        ${palavra}: ${palavra}
+        ${palavra}: ${palavra}`
+    })
+
+
+
+
+})
 
 module.exports = router
