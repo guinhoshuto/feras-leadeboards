@@ -78,4 +78,8 @@ router.get('/', async function(req, res, next) {
     res.json({response})
 });
 
+router.get('/nos', (req, res) => {
+  
+})
+
 module.exports = router

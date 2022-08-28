@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const dashRouter = require('./routes/dash');
@@ -11,6 +12,7 @@ const guzRouter = require('./routes/guzclap');
 const cubotRouter = require('./routes/cubot');
 
 const app = express();
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
