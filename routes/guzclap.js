@@ -20,6 +20,14 @@ router.get('/twitch/kappa', async function (req, res, next) {
     .catch(e => res.status(500).json({'msg': e}))
 });
 
+router.get('/twitch/kappames', async function (req, res, next) {
+    const conn =  await db.connect();
+    const query = "SELECT username, kappaMes FROM `guzTwitchMembers` WHERE kappaMes > 0 ORDER BY kappaMes DESC"
+    conn.query(query) 
+    .then(([users]) => res.json(users))
+    .catch(e => res.status(500).json({'msg': e}))
+});
+
 router.get('/twitch/members', async function (req, res, next) {
     const conn = await db.connect();
     const query = "SELECT * FROM `guzTwitchMembers` WHERE 1 ORDER BY kappa DESC"
