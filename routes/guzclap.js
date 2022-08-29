@@ -1,5 +1,5 @@
 const express = require('express');
-const { route } = require('.');
+// const { route } = require('.');
 const router = express.Router();
 const db = require('../db');
 
@@ -55,7 +55,13 @@ router.put('/twitch/:att/:member/:n', async function(req, res, next){
     const operator = parseInt(n) < 0 ? '' : '+'; 
 
     const conn = await db.connect()
-    const queryUpdateAtt = `UPDATE guzTwitchMembers SET ${req.params.att} = ${req.params.att} ${operator} ${n} WHERE username = '${req.params.member}'`
+    let queryUpdateAtt = ''
+    if ( req.params.att === 'kappas'){
+        queryUpdateAtt = `UPDATE guzTwitchMembers SET kappa = kappa + 1, kappaMes = kappaMes +1 WHERE username = '${req.params.member}'`
+    } else {
+        queryUpdateAtt = `UPDATE guzTwitchMembers SET ${req.params.att} = ${req.params.att} ${operator} ${n} WHERE username = '${req.params.member}'`
+
+    }
     console.log(queryUpdateAtt)
     conn.query(queryUpdateAtt)
     .then(() => res.json({'msg': 'foi'}))
