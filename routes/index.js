@@ -5,49 +5,53 @@ const db = require('../db')
 
 const params = {
   headers: {
-    "accept": "application/json", 
-    "authorization": "bearer undefined", 
+    "accept": "application/json",
+    "authorization": "bearer undefined",
     "content-type": "application/json"
   }
 }
 
 
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/find/:channel/:user', async function(req, res, next) {
+router.post('/teste', (req, res) => {
+  res.json({ 'msg': 'oi' })
+})
+
+router.get('/find/:channel/:user', async function (req, res, next) {
   const channel = req.params.channel;
   const username = req.params.user;
   try {
     const channelInfo = await axios.get(`https://api.streamelements.com/kappa/v2/channels/${channel}`, params)
-    try{
+    try {
       const leaderboard = await axios.get(`https://api.streamelements.com/kappa/v2/points/${channelInfo.data._id}/top?limit=1000&offset=0`, params)
       const users = leaderboard.data.users;
 
       const user = users.find(u => u.username === username)
-      res.json({user});
-    } catch(e) {
-      res.status(400).json({'erro': e})
+      res.json({ user });
+    } catch (e) {
+      res.status(400).json({ 'erro': e })
     }
-  } catch(e) {
-    res.status(400).json({'erro': e})
+  } catch (e) {
+    res.status(400).json({ 'erro': e })
   }
 
 })
 
 
-router.get('/:channel', async function(req, res, next) {
+router.get('/:channel', async function (req, res, next) {
   const now = new Date();
   const conn = await db.connect()
   try {
     const channelInfo = await axios.get(`https://api.streamelements.com/kappa/v2/channels/${req.params.channel}`, params)
-    try { 
+    try {
       const leaderboard = await axios.get(`https://api.streamelements.com/kappa/v2/points/${channelInfo.data._id}/top?limit=1000&offset=0`, params)
       console.log(leaderboard.data)
       let offset = 1000;
       const users = leaderboard.data.users;
-      while(leaderboard.data._total > offset){
+      while (leaderboard.data._total > offset) {
         let leaderboardTemp = await axios.get(`https://api.streamelements.com/kappa/v2/points/${channelInfo.data._id}/top?limit=1000&offset=${offset}`, params)
         console.log(leaderboardTemp.data.users)
         // users.push(leaderboard.data.users)
@@ -56,10 +60,10 @@ router.get('/:channel', async function(req, res, next) {
       }
 
 
-      await conn.connect(function(err) {
+      await conn.connect(function (err) {
         if (err) throw err;
       });
-      
+
       console.log("Connected!");
       const sql = `INSERT INTO ferasLeaderboard (user, channel, channelId, points, created_at) VALUES ?`
       const values = []
@@ -73,10 +77,10 @@ router.get('/:channel', async function(req, res, next) {
       });
       res.json(users)
     } catch (e) {
-      res.status(500).json({'message': 'deu ruim pra achar o leaderboard' + e})
+      res.status(500).json({ 'message': 'deu ruim pra achar o leaderboard' + e })
     }
-  } catch (e){
-    res.status(500).json({'message': 'deu ruim pra achar o user' + e})
+  } catch (e) {
+    res.status(500).json({ 'message': 'deu ruim pra achar o user' + e })
   }
 })
 

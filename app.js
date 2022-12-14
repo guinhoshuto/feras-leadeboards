@@ -10,6 +10,7 @@ const dashRouter = require('./routes/dash');
 const teamRouter = require('./routes/team');
 const guzRouter = require('./routes/guzclap');
 const cubotRouter = require('./routes/cubot');
+const cultoRouter = require('./routes/culto');
 
 const app = express();
 app.use(cors());
@@ -33,6 +34,7 @@ app.use(function(req, res, next) {
 });
 
 app.use('/cubot', cubotRouter);
+app.use('/culto', cultoRouter);
 app.use('/guzclap', guzRouter);
 app.use('/dash', dashRouter);
 app.use('/team', teamRouter);

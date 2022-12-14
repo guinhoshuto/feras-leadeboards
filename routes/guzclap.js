@@ -113,10 +113,6 @@ router.get('/genio/:palavra', function (req, res){
         'msg':
         `GÊNIO: você tem 3 desejos \n\n${capitalizeFirstLetter(palavra)}: faça que todas as palavras tenham ${charQtd} letras \n\n${capitalizeFirstLetter(primeiroPedido('Gênio', charQtd))}: ${primeiroPedido('Okay', charQtd)} \n\n${capitalizeFirstLetter(palavra)}: ${primeiroPedido('faça', charQtd)} ${primeiroPedido('todas', charQtd)} ${primeiroPedido('as', charQtd)} ${primeiroPedido('palavras', charQtd)} ${primeiroPedido('terem', charQtd)} ${segundaMetade(palavra).toUpperCase()} ${primeiroPedido('no', charQtd)} ${primeiroPedido('final', charQtd)} \n\n${capitalizeFirstLetter(segundoPedido('Gênio', palavra))}: ${segundoPedido('ok', palavra)} \n\n${capitalizeFirstLetter(palavra)}: ${segundoPedido('faça', palavra)} ${segundoPedido('todas', palavra)} ${segundoPedido('as', palavra)} ${segundoPedido('palavras', palavra)} ${segundoPedido('com', palavra)} ${primeiraMetade(palavra).toUpperCase()} ${segundoPedido('no', palavra)} ${segundoPedido('começo', palavra)} \n\n${capitalizeFirstLetter(palavra)}: ${capitalizeFirstLetter(palavra)} \n\n${capitalizeFirstLetter(palavra)}: ${capitalizeFirstLetter(palavra)}`
     })
-
-
-
-
 })
 
 module.exports = router
